@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Qual moeda eu levo?</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    </head>
+    <style>
+        body {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        h3 {
+            margin-top: 2rem;
+        }
+
+        .row {
+            margin-bottom: 1rem;
+        }
+        .row .row {
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+
+        hr {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+    <body>
+        <div class="container">
+
+            <h1>Qual moeda eu levo?</h1>
+            <p class="lead">Descubra qual moeda é melhor você levar para sua viagem até Buenos Aires!</p>
+            <hr>
+
+            <form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dolar_compra_real">Dólar Turismo (BRL -> USD)</label>
+                            <input id="dolar_compra_real" class="form-control" placeholder="Cotação do dólar turismo. Ex.: 3.42"/>
+                            <small class="form-text text-muted">Você pode obter a cotação no site <a href="https://melhorcambio.com">melhorcambio.com</a></small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="euro_compra_real">Euro Turismo (BRL -> EUR)</label>
+                            <input id="euro_compra_real" class="form-control" placeholder="Cotação do euro turismo. Ex.: 4.04" />
+                            <small class="form-text text-muted">Você pode obter a cotação no site
+                                <a href="https://melhorcambio.com">melhorcambio.com</a>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="real_compra_peso">Real Compra (BRL -> ARS)</label>
+                            <input id="real_compra_peso" class="form-control" placeholder="Compra de real em pesos argentinos. Ex.: 5.55" />
+                            <small class="form-text text-muted">Você pode obter a cotação no site
+                                <a href="http://dolarhoy.com">dolarhoy.com</a>
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="dolar_compra_peso">Dólar Compra (USD -> ARS)</label>
+                            <input id="dolar_compra_peso" class="form-control" placeholder="Compra de dólar em pesos argentinos. Ex.: 17.350" />
+                            <small class="form-text text-muted">Você pode obter a cotação no site
+                                <a href="http://dolarhoy.com">dolarhoy.com</a>
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="euro_compra_peso">Euro Compra (EUR -> ARS)</label>
+                            <input id="euro_compra_peso" class="form-control" placeholder="Compra de euro em pesos argentinos. Ex.: 20.55"
+                            />
+                            <small class="form-text text-muted">Você pode obter a cotação no site
+                                <a href="http://dolarhoy.com">dolarhoy.com</a>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <button id="submit" type="submit" class="btn btn-primary">Calcular melhor opção!</button>
+            </form>
+            <div class="result" style="display:none;">
+                <hr>
+                <h1 style="color: green; text-align: center;">LEVE <span class="opcao"></span>!</h1>
+            </div>
+        </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $("form").submit(function (e) {
+            e.preventDefault();
+            var cot_dolar_compra_real = $("#dolar_compra_real").val();
+            var cot_euro_compra_real = $("#euro_compra_real").val();
+            var cot_dolar_compra_peso = $("#dolar_compra_peso").val();
+            var cot_real_compra_peso = $("#real_compra_peso").val();
+            var cot_euro_compra_peso = $("#euro_compra_peso").val();
+            var montante_reais = 1;
+            var montante_dolares = montante_reais / cot_dolar_compra_real;
+            var montante_euros = montante_reais / cot_euro_compra_real;
+
+            var result = [
+                {
+                    "opcao": "REAIS",
+                    "value": montante_reais * cot_real_compra_peso,
+                },
+                {
+                    "opcao": "DÓLARES",
+                    "value": montante_dolares * cot_dolar_compra_peso,
+                },
+                {
+                    "opcao": "EUROS",
+                    "value": montante_euros * cot_euro_compra_peso,
+                }
+            ];
+
+            var best = result.reduce(function (l, e) {
+                return e.value > l.value ? e : l;
+            });
+
+            $(".opcao").html(best.opcao);
+            $(".result").fadeIn();
+
+        });
+    </script>
+</html>
